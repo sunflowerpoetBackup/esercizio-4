@@ -1,0 +1,36 @@
+package com.example.esercizio4;
+
+/*scrivi una applicazione web Spring Boot con:
+NameController dove si mappa il parametro name per:
+restituire il nome alla chiamata GET
+restuiture il nome al contrario (es. da John a nhoJ, usando StringBuilder) alla chiamata POST
+aggungi tutto il necessario per avere una documentazione completa delle endpoint create sopra (nome della chiamata, parametri ecc)
+testare le chiamate del API endpoint usando Postman*/
+
+import io.swagger.annotations.ApiOperation;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.web.bind.annotation.*;
+
+@SpringBootApplication
+@RestController
+@RequestMapping("/api")
+public class NameController {
+
+	@ApiOperation(value = "Get name")
+	@GetMapping("/name")
+	public String getName(@RequestParam String name) {
+		return name;
+	}
+
+	@ApiOperation(value = "Post name in reverse")
+	@PostMapping("/reverse")
+	public String reverseNamePost(@RequestBody String name) {
+		StringBuilder reversedName = new StringBuilder(name);
+		return reversedName.reverse().toString();
+	}
+
+	public static void main(String[] args) {
+		SpringApplication.run(NameController.class, args);
+	}
+}
